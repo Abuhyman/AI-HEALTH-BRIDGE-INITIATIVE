@@ -181,6 +181,8 @@ class HealthBridgeAI:
                 "• Choose whole grains over processed foods",
                 "• Monitor blood sugar levels regularly",
                 "• Maintain healthy body weight"
+                "• Exercise for 30 minutes most days"
+                
             ])
         
         if any("protein" in factor.lower() for factor in risk_factors):
