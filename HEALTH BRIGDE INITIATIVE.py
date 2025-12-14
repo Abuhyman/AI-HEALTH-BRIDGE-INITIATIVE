@@ -86,13 +86,14 @@ class HealthBridgeAI:
             score += 1
             risk_factors.append("Proteinuria")
 
-        # Blood Glucose
-        if data.get('blood_glucose', 0) >= 11.1:
+        # Blood Glucose assessment - USING mg/dL
+        # mmol/L to mg/dL conversion: 7.0 mmol/L = 126 mg/dL, 11.1 mmol/L = 200 mg/dL
+        if data['random_glucose'] >= 200:  # Diabetes threshold in mg/dL
             score += 2
-            risk_factors.append("High Diabetes Risk")
-        elif data.get('blood_glucose', 0) >= 7.0:
+            risk_factors.append(f"High diabetes risk (Glucose: {data['random_glucose']} mg/dL)")
+        elif data['random_glucose'] >= 126:  # Pre-diabetes threshold in mg/dL
             score += 1
-            risk_factors.append("Elevated Glucose")
+            risk_factors.append(f"Elevated glucose (Glucose: {data['random_glucose']} mg/dL)")
 
         # Additional Risk Factors
         if data.get('known_diabetes') == 'Yes':
@@ -131,8 +132,8 @@ class HealthBridgeAI:
             timeline = "Within 1 month"
         else:
             risk_level = "🟢 LOW RISK"
-            recommendation = "Lifestyle advice and annual screening"
-            timeline = "Annual checkup"
+            recommendation = "Lifestyle advice and monthly screening"
+            timeline = "Monthly checkup"
 
         return {
             'risk_level': risk_level,
@@ -369,8 +370,14 @@ def show_screening_page(ai_engine):
             with col3:
                 systolic_bp = st.slider("Systolic BP (mmHg)*", 80, 250, 120)
                 diastolic_bp = st.slider("Diastolic BP (mmHg)*", 50, 150, 80)
-                blood_glucose = st.number_input("Random Blood Glucose (mmol/L)", min_value=2.0, max_value=30.0,
-                                                value=5.0, step=0.1)
+                blood_glucose = st.number_input(
+                    "Random Blood Glucose (mg/dL)*",
+                    min_value=20,
+                    max_value=600,
+                    value=100,
+                    step=1,
+                    help="Normal: 70-139 mg/dL | Pre-diabetes: 140-199 mg/dL | Diabetes: ≥200 mg/dL"
+                )
 
             with col4:
                 weight = st.number_input("Weight (kg)", min_value=20.0, max_value=200.0, value=70.0, step=0.1)
@@ -639,13 +646,13 @@ def show_dashboard(ai_engine):
     st.dataframe(display_df, use_container_width=True)
 
     # Export data
-    if st.button("📥 Export Data as CSV"):
-        csv = df.to_csv(index=False)
+    if st.button("📥 Export Data as pdf"):
+        pdf = df.to_pdf(index=False)
         st.download_button(
-            label="Download CSV",
-            data=csv,
-            file_name="health_screening_data.csv",
-            mime="text/csv"
+            label="Download pdf",
+            data=pdf,
+            file_name="health_screening_data.pdf",
+            mime="text/pdf"
         )
 
 
@@ -1193,6 +1200,8 @@ def show_about_page():
         team_members = [
             {"name": "Alabi Ridwan Opeyemi", "role": "Founder & CEO",
              "bio": "Presidential Health Fellow, Public Health Innovator", "img": "👨‍⚕️"},
+            {"name": "Salam Raheem Olatunji", "role": "CTO",
+             "bio": "LEAD, UI/UX PANDAR", "img": "👨‍⚕️"},
             {"name": "Mr. Tijani Sodiq", "role": "Research & Development Lead",
              "bio": "Health Systems Strategist", "img": "🔬"},
             {"name": "Mr. Nafiu Issa", "role": "Financial & Regulatory Advisor",
@@ -1201,9 +1210,9 @@ def show_about_page():
              "bio": "Supply Chain & Technology Specialist", "img": "💻"},
             {"name": "Imam Sodiq Oloyede", "role": "Community & Religious Advisor",
              "bio": "Community Mobilization Expert", "img": "🕌"},
-            {"name": "Ms. Taiwo Oni", "role": "Secretary & Volunteer Coordinator",
+            {"name": "Ms. Taiwo Oni", "role": "Secretary & Social Media Manager",
              "bio": "Community Health Organizer", "img": "📋"},
-            {"name": "Amotu Rahman Clinic", "role": "Medical Partner",
+            {"name": "Amotu Rahman Clinic", "role": "Medical Partner & Volunteer Coordinator",
              "bio": "Clinical Excellence & Quality Care", "img": "🏥"}
         ]
 
@@ -1312,3 +1321,4 @@ def show_about_page():
 # Run the app
 if __name__ == "__main__":
     main()
+
