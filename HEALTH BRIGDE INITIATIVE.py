@@ -85,13 +85,13 @@ class HealthBridgeAI:
             score += 1
             risk_factors.append("Proteinuria")
         
-        # Blood Glucose
-        if data.get('blood_glucose', 0) >= 11.1:
-            score += 2
-            risk_factors.append("High Diabetes Risk")
-        elif data.get('blood_glucose', 0) >= 7.0:
-            score += 1
-            risk_factors.append("Elevated Glucose")
+       # Blood Glucose (in mg/dL)
+if data.get('blood_glucose', 0) >= 200:  # Changed from 11.1 mmol/L to 200 mg/dL
+    score += 2
+    risk_factors.append("High Diabetes Risk")
+elif data.get('blood_glucose', 0) >= 126:  # Changed from 7.0 mmol/L to 126 mg/dL
+    score += 1
+    risk_factors.append("Elevated Glucose")
         
         # Additional Risk Factors
         if data.get('known_diabetes') == 'Yes':
@@ -365,7 +365,7 @@ def show_screening_page(ai_engine):
             with col3:
                 systolic_bp = st.slider("Systolic BP (mmHg)*", 80, 250, 120)
                 diastolic_bp = st.slider("Diastolic BP (mmHg)*", 50, 150, 80)
-                blood_glucose = st.number_input("Random Blood Glucose (mmol/L)", min_value=2.0, max_value=30.0, value=5.0, step=0.1)
+                blood_glucose = st.number_input("Random Blood Glucose (mg/dL)", min_value=20.0, max_value=500.0, value=100.0, step=1.0)
             
             with col4:
                 weight = st.number_input("Weight (kg)", min_value=20.0, max_value=200.0, value=70.0, step=0.1)
@@ -627,19 +627,41 @@ def show_dashboard(ai_engine):
     
     # Data Table
     st.subheader("📋 Screening Records")
-    display_df = df[['name', 'age', 'location', 'systolic_bp', 'diastolic_bp', 'urine_protein']].copy()
+    display_df = df[['name', 'age', 'location', 'blood_glucose' , 'systolic_bp', 'diastolic_bp', 'urine_protein']].copy()
     display_df['Risk Level'] = [ai_engine.calculate_kidney_risk(data)['risk_level'].split()[0] 
                                 for data in st.session_state.screening_data]
     st.dataframe(display_df, use_container_width=True)
     
-    # Export data
-    if st.button("📥 Export Data as CSV"):
+   # Export section with format selection
+st.subheader("Export Data")
+
+export_format = st.radio(
+    "Select export format:",
+    ["CSV", "PDF", "Word"],
+    horizontal=True
+)
+
+if st.button(f"Export as {export_format}"):
+    if export_format == "CSV":
         csv = df.to_csv(index=False)
         st.download_button(
-            label="Download CSV",
+            label="📥 Download CSV",
             data=csv,
             file_name="health_screening_data.csv",
             mime="text/csv"
+        )
+    
+    elif export_format == "PDF":
+        # Use the PDF export code from Option 1
+        # (You'll need to import the required libraries)
+        pass
+    
+    elif export_format == "Word":
+        # Use the Word export code from Option 2
+        # (You'll need to import the required libraries)
+        pass
+
+
         )
 
 def show_ai_training_page(ai_engine):
@@ -679,12 +701,18 @@ def show_ai_training_page(ai_engine):
                     """)
                 
                 with col2:
-                    st.markdown(f"""
-                    **Vital Signs:**
-                    - BP: {case_data['systolic_bp']}/{case_data['diastolic_bp']}
-                    - Urine Protein: {case_data['urine_protein']}
-                    - Glucose: {case_data.get('blood_glucose', 'N/A')}
-                    """)
+                    glucose_value = case_data.get('blood_glucose', None)
+if glucose_value is not None:
+    glucose_display = f"{glucose_value} mg/dL"
+else:
+    glucose_display = 'N/A'
+    
+st.markdown(f"""
+**Vital Signs:**
+- BP: {case_data['systolic_bp']}/{case_data['diastolic_bp']}
+- Urine Protein: {case_data['urine_protein']}
+- Glucose: {glucose_display}
+""")
                 
                 # AI's initial assessment
                 ai_assessment = ai_engine.calculate_kidney_risk(case_data)
