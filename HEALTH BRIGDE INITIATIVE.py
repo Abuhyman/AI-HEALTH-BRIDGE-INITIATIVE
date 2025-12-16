@@ -88,12 +88,21 @@ class HealthBridgeAI:
 
         # Blood Glucose assessment - USING mg/dL
         # mmol/L to mg/dL conversion: 7.0 mmol/L = 126 mg/dL, 11.1 mmol/L = 200 mg/dL
-        if data['random_glucose'] >= 200:  # Diabetes threshold in mg/dL
-            score += 2
-            risk_factors.append(f"High diabetes risk (Glucose: {data['random_glucose']} mg/dL)")
-        elif data['random_glucose'] >= 126:  # Pre-diabetes threshold in mg/dL
-            score += 1
-            risk_factors.append(f"Elevated glucose (Glucose: {data['random_glucose']} mg/dL)")
+       def calculate_kidney_risk(self, data):
+    risk_score = 0
+    
+    # Check if random_glucose exists before accessing it
+    if 'random_glucose' in data and data['random_glucose'] >= 200:
+        risk_score += 20
+    
+    # Similarly for other keys
+    if 'blood_pressure' in data:
+        systolic = data['blood_pressure'].get('systolic', 0)
+        if systolic >= 140:
+            risk_score += 15
+            
+    # ... rest of your code
+    return risk_score
 
         # Additional Risk Factors
         if data.get('known_diabetes') == 'Yes':
