@@ -28,7 +28,7 @@ supabase_url = st.secrets.get("SUPABASE_URL", os.getenv("SUPABASE_URL"))
 supabase_key = st.secrets.get("SUPABASE_KEY", os.getenv("SUPABASE_KEY"))
 if supabase_url and supabase_key:
 supabase = create_client(supabase_url, supabase_key)
-st.success(" Connected to cloud database")✅
+st.success(" Connected to cloud database ✅")
 return supabase
 else:
 st.warning(" Database credentials not found. Using session storage only.")⚠
