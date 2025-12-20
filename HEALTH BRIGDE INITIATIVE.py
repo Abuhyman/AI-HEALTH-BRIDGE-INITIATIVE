@@ -191,19 +191,19 @@ score += 1
 risk_factors.append("Age > 60")
 # Determine Risk Level
 if score >= 6:
-risk_level = " CRITICAL RISK"🔴
+risk_level = " CRITICAL RISK 🔴"
 recommendation = "Immediate medical attention required"
 timeline = "Within 48 hours"
 elif score >= 5:
-risk_level = " HIGH RISK"🔴
+risk_level = " HIGH RISK 🔴"
 recommendation = "Urgent referral to specialist required"
 timeline = "Within 1 week"
 elif score >= 3:
-risk_level = " MODERATE RISK"🟡
+risk_level = " MODERATE RISK 🟡"
 recommendation = "Refer to healthcare facility for evaluation"
 timeline = "Within 1 month"
 else:
-risk_level = " LOW RISK"🟢
+risk_level = " LOW RISK 🟢"
 recommendation = "Lifestyle advice and annual screening"
 timeline = "Annual checkup"
 return {
@@ -286,7 +286,7 @@ border-left: 5px solid #667eea;
 # Hero Section
 st.markdown("""
 <div class="hero">
-<h1 style="font-size: 3rem; margin-bottom: 1rem;"> Health Bridge Initiative</h1>🌉
+<h1 style="font-size: 3rem; margin-bottom: 1rem;"> Health Bridge Initiative</h1>"C:\Users\HomePC\Desktop\HBI\LOGO 2.jpg"
 <h3 style="color: rgba(255,255,255,0.9);">Building Nigeria's Shield Against Silent
 Epidemics</h3>
 <p style="font-size: 1.2rem; margin-top: 2rem;">
