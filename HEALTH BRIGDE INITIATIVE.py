@@ -31,10 +31,10 @@ supabase = create_client(supabase_url, supabase_key)
 st.success(" Connected to cloud database ✅")
 return supabase
 else:
-st.warning(" Database credentials not found. Using session storage only.")⚠
+st.warning(" Database credentials not found. Using session storage only. ⚠")
 return None
 except Exception as e:
-st.error(f" Database connection failed: {str(e)}")❌
+st.error(f" Database connection failed: {str(e)} ❌")
 return None
 # ==================== PAYSTACK PAYMENT SETUP ====================
 class PaymentManager:
