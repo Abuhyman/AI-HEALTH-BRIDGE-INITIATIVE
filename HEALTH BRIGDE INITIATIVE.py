@@ -1744,10 +1744,10 @@ def show_about_page():
         A Nigeria where no one dies from preventable chronic diseases because of late diagnosis or lack of access to care.
         
         ## Our Story
-        Founded in 2023, Health Bridge Initiative was born out of a simple observation:
+        Founded in 2025, Health Bridge Initiative was born out of a simple observation:
         **too many Nigerians were dying from diseases that could have been managed if detected early.**
         
-        Our founder, Dr. Chinedu Okoro, witnessed firsthand the devastating impact of late-stage kidney disease diagnosis in his community. What started as a small community screening program in Lagos has grown into a nationwide movement.
+        Our founder, MR ALABI RIDWAN OPEYEMI, witnessed firsthand the devastating impact of late-stage kidney disease diagnosis in his community. What started as a small community screening program in Lagos has grown into a nationwide movement.
         
         ## What Makes Us Different
         1. **Community-First Approach**: We meet people where they are, in their communities
@@ -1767,14 +1767,14 @@ def show_about_page():
     with tabs[1]:
         st.subheader("Leadership Team")
         team_members = [
-            {"name": "Dr. Chinedu Okoro", "role": "Founder & CEO",
-             "bio": "Medical doctor with 15+ years experience in public health"},
-            {"name": "Amina Yusuf", "role": "Chief Medical Officer",
-             "bio": "Nephrologist specializing in community health"},
-            {"name": "Emeka Nwosu", "role": "CTO",
-             "bio": "Technology entrepreneur focused on health tech"},
-            {"name": "Funke Adebayo", "role": "Operations Director",
-             "bio": "Former hospital administrator with nationwide network"}
+            {"name": "Mr ALABI RIDWAN OPEYEMI", "role": "Founder & CEO",
+             "bio": "BIOMEDICAL EPIDEMIOLGIST  with 5+ years experience in public health"},
+            {"name": "IBRAHEEM RUQOYA", "role": "Chief Medical Partner ",
+             "bio": "Nephrological Nurse  specializing in community health"},
+            {"name": "SALAAM RAHEEM OLATUNJI", "role": "CTO",
+             "bio": "Technology entrepreneur focused on health tech and User Experience and Interface"},
+            {"name": "MR ISSA NAFIU", "role": "CFO",
+             "bio": "AUDITOR,LAGOS STATE MINISTRY OF FINANCE"}
         ]
         
         for member in team_members:
@@ -1784,9 +1784,9 @@ def show_about_page():
         st.markdown("---")
         st.subheader("Board of Advisors")
         advisors = [
-            "Prof. Ibrahim Bello - Lagos University Teaching Hospital",
-            "Dr. Grace Okon - Federal Ministry of Health",
-            "Engr. Tunde Williams - Technology Innovation Center",
+            "DR. OYELEYE HASSAN - Lagos University Teaching Hospital",
+            "Dr. ABUBAKR ASHIRU - Federal Ministry of Health",
+            "DR. OYEYEMI OGUNJOBI - LAGOS STATE MINISTRY OF HEALTH(SWAp DESK )",
             "Mrs. Bola Adekunle - Nigerian Health Foundation"
         ]
         
@@ -1828,8 +1828,8 @@ def show_about_page():
             ### Headquarters
             **Address:**
             Health Bridge Initiative
-            123 Health Street
-            Lagos, Nigeria
+           27, MAGBON BADAGRY
+            LAGOS, Nigeria
             
             **Phone:**
             +234 817 937 1170
@@ -1844,16 +1844,16 @@ def show_about_page():
             st.markdown("""
             ### Regional Offices
             **Lagos Office**
-            +234 802 345 6789
+           
             
             **Kano Office**
-            +234 803 456 7890
+           
             
             **Abuja Office**
-            +234 804 567 8901
+         
             
             **Port Harcourt Office**
-            +234 805 678 9012
+            
             """)
         
         st.markdown("---")
