@@ -33,6 +33,22 @@ load_dotenv()
 
 # ==================== SUPABASE DATABASE SETUP ====================
 @st.cache_resource
+# Add at the beginning of your init_supabase() function
+def init_supabase():
+    """Initialize Supabase connection"""
+    try:
+        # DEBUG: Check what secrets are available
+        import json
+        all_secrets = dict(st.secrets)
+        print("DEBUG - Available secrets:", list(all_secrets.keys()))
+        
+        supabase_url = st.secrets.get("SUPABASE_URL")
+        supabase_key = st.secrets.get("SUPABASE_KEY")
+        
+        print(f"DEBUG - URL exists: {supabase_url is not None}")
+        print(f"DEBUG - KEY exists: {supabase_key is not None}")
+        
+        # Rest of your code...
 def init_supabase():
     """Initialize Supabase connection"""
     try:
