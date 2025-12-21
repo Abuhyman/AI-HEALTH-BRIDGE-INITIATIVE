@@ -33,37 +33,21 @@ load_dotenv()
 
 # ==================== SUPABASE DATABASE SETUP ====================
 @st.cache_resource
-# Add at the beginning of your init_supabase() function
 def init_supabase():
     """Initialize Supabase connection"""
     try:
-        # DEBUG: Check what secrets are available
-        import json
-        all_secrets = dict(st.secrets)
-        print("DEBUG - Available secrets:", list(all_secrets.keys()))
-        
-        supabase_url = st.secrets.get("SUPABASE_URL")
-        supabase_key = st.secrets.get("SUPABASE_KEY")
-        
-        print(f"DEBUG - URL exists: {supabase_url is not None}")
-        print(f"DEBUG - KEY exists: {supabase_key is not None}")
-        
-        # Rest of your code...
-def init_supabase():
-    """Initialize Supabase connection"""
-    try:
+        # Get credentials from Streamlit secrets or environment
         supabase_url = st.secrets.get("SUPABASE_URL", os.getenv("SUPABASE_URL"))
         supabase_key = st.secrets.get("SUPABASE_KEY", os.getenv("SUPABASE_KEY"))
         
         if supabase_url and supabase_key:
-            # Use this syntax
-            supabase_client = supabase.create_client(supabase_url, supabase_key)
+            supabase = create_client(supabase_url, supabase_key)
             st.success(" Connected to cloud database ✅")
-            return supabase_client
+            return supabase
         else:
             st.warning(" Database credentials not found. Using session storage only. ⚠")
             return None
-    except Exception as e:
+    except Exception as e:  # <-- THIS LINE WAS MISSING
         st.error(f" Database connection failed: {str(e)} ❌")
         return None
 
