@@ -1,5 +1,9 @@
 # app.py - Complete Production-Ready Health Bridge Initiative App
 # Supports: Web App + Mobile App (via Streamlit Mobile) + Cloud Database
+import os
+import streamlit as st
+from dotenv import load_dotenv
+from supabase import create_client
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -8,17 +12,23 @@ from datetime import datetime, timedelta
 import json
 import hashlib
 import os
-from supabase import create_client,
+from supabase import create_client
+# ==================== IMPORTS ====================
+import os
+from dotenv import load_dotenv
+import streamlit as st  # <-- ADD THIS LINE
 import requests
 from streamlit_option_menu import option_menu
 from streamlit_lottie import st_lottie
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 
+# Fixed import for Supabase
+import supabase
+# Or if that doesn't work, try:
+# from supabase import create_client
+
 # ==================== ENVIRONMENT SETUP ====================
-# Create .env file with these variables or set in Streamlit Secrets
-import os
-from dotenv import load_dotenv
 load_dotenv()
 
 # ==================== SUPABASE DATABASE SETUP ====================
@@ -30,13 +40,10 @@ def init_supabase():
         supabase_key = st.secrets.get("SUPABASE_KEY", os.getenv("SUPABASE_KEY"))
         
         if supabase_url and supabase_key:
-            # OLD WAY (if you were using it):
-            # supabase = create_client(supabase_url, supabase_key)
-            
-            # NEW WAY:
-            supabase = create_client(supabase_url, supabase_key)
+            # Use this syntax
+            supabase_client = supabase.create_client(supabase_url, supabase_key)
             st.success(" Connected to cloud database ✅")
-            return supabase
+            return supabase_client
         else:
             st.warning(" Database credentials not found. Using session storage only. ⚠")
             return None
