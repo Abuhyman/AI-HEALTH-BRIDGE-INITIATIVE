@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 import json
 import hashlib
 import os
-from supabase import create_client, Client
+from supabase import create_client,
 import requests
 from streamlit_option_menu import option_menu
 from streamlit_lottie import st_lottie
@@ -30,6 +30,10 @@ def init_supabase():
         supabase_key = st.secrets.get("SUPABASE_KEY", os.getenv("SUPABASE_KEY"))
         
         if supabase_url and supabase_key:
+            # OLD WAY (if you were using it):
+            # supabase = create_client(supabase_url, supabase_key)
+            
+            # NEW WAY:
             supabase = create_client(supabase_url, supabase_key)
             st.success(" Connected to cloud database ✅")
             return supabase
