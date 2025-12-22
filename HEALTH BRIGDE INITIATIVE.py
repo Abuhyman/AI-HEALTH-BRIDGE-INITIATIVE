@@ -251,16 +251,48 @@ class HealthBridgeAI:
             'bmi': data.get('bmi', None)
         }
     
-    def save_to_cloud(self, table, data):
-        """Save data to Supabase"""
-        if self.supabase:
-            try:
-                response = self.supabase.table(table).insert(data).execute()
-                return response.data[0] if response.data else None
-            except Exception as e:
-                st.error(f"Database error: {str(e)}")
-                return None
-        return None
+  def save_to_cloud(self, table, data):
+    """Save data to Supabase"""
+    if self.supabase:
+        try:
+            # Prepare data with all columns
+            cloud_data = {
+                'patient_id': data.get('patient_id'),
+                'name': data.get('name'),
+                'age': data.get('age'),
+                'phone': data.get('phone'),
+                'location': data.get('location'),
+                'systolic_bp': data.get('systolic_bp'),
+                'diastolic_bp': data.get('diastolic_bp'),
+                'blood_glucose': data.get('blood_glucose'),
+                'weight': data.get('weight'),
+                'height': data.get('height'),
+                'urine_protein': data.get('urine_protein'),
+                'known_diabetes': data.get('known_diabetes'),
+                'known_hypertension': data.get('known_hypertension'),
+                'family_history': data.get('family_history'),
+                'herbal_use': data.get('herbal_use'),
+                'smoking': data.get('smoking'),
+                'risk_score': data.get('risk_score'),
+                'risk_level': data.get('risk_level'),
+                'recommendation': data.get('recommendation'),
+                'bmi': data.get('bmi'),
+                'risk_factors': data.get('risk_factors'),
+                'language': data.get('language'),
+                'sex': data.get('sex'),
+                'data_shared': data.get('data_shared', False),
+                'timestamp': datetime.now().isoformat()
+            }
+            
+            # Remove None values
+            cloud_data = {k: v for k, v in cloud_data.items() if v is not None}
+            
+            response = self.supabase.table(table).insert(cloud_data).execute()
+            return response.data[0] if response.data else None
+        except Exception as e:
+            st.error(f"Database error: {str(e)}")
+            return None
+    return None
     
     def get_from_cloud(self, table, query="*"):
         """Retrieve data from Supabase"""
@@ -288,7 +320,6 @@ st.set_page_config(
         'About': '### Health Bridge Initiative - Saving Lives Through Early Detection'
     }
 )
-
 # ==================== SESSION STATE INITIALIZATION ====================
 if 'screening_data' not in st.session_state:
     st.session_state.screening_data = []
