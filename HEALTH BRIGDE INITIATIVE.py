@@ -792,6 +792,7 @@ TIMELINE:
 =================================
 For verification: www.healthbridge.ng
 Emergency: 112 or 767
+📞 *08179371170*
 =================================
 """
             
@@ -1446,16 +1447,16 @@ def show_volunteer_registration():
             st.write("**WhatsApp Group:** Join here")
             st.write("**Forum:** volunteers.healthbridge.ng")
             st.write("**Email:** volunteers@healthbridge.ng")
-            st.write("**Hotline:** 0817 937 1171")
+            st.write("**Hotline:** 0817 937 1170")
         
         st.markdown("---")
         st.subheader("Volunteer Stories")
         stories = [
-            {"name": "Dr. Amina Yusuf", "role": "Medical Volunteer",
+            {"name": "Dr. OYELEYE HASSAN", "role": "Medical Volunteer",
              "story": "I've screened over 500 people and detected 25 high-risk cases. Saving lives through early detection!"},
-            {"name": "Chinedu Okoro", "role": "Community Ambassador",
+            {"name": "IMAM OLOYEDE SODIQ", "role": "Community Ambassador",
              "story": "Translating health information to Igbo has helped my community understand their risks better."},
-            {"name": "Sarah Johnson", "role": "Data Specialist",
+            {"name": "BILAL DAWODU", "role": "Data Specialist",
              "story": "Every data point I enter represents a life we're helping to save. It's incredibly rewarding."}
         ]
         
