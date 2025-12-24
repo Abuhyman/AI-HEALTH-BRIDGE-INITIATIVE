@@ -251,21 +251,24 @@ class HealthBridgeAI:
             'bmi': data.get('bmi', None)
         }
     
-def save_to_cloud(self, table, data):
-    """Save data to Supabase"""
-    if self.supabase:
-        try:
-            # Convert data to dictionary if it's not already
-            if not isinstance(data, dict):
-                data = dict(data)
-            
-            # Insert into database
-            response = self.supabase.table(table).insert(data).execute()
-            return response.data[0] if response.data else None
-        except Exception as e:
-            st.error(f"Database error: {str(e)}")
-            return None
-    return None
+    def save_to_cloud(self, table, data):
+        """Save data to Supabase"""
+        if self.supabase:
+            try:
+                # Convert data to dictionary if needed
+                if not isinstance(data, dict):
+                    data = dict(data)
+                
+                # Remove None values
+                clean_data = {k: v for k, v in data.items() if v is not None}
+                
+                # Insert into database
+                response = self.supabase.table(table).insert(clean_data).execute()
+                return response.data[0] if response.data else None
+            except Exception as e:
+                st.error(f"Database error: {str(e)}")
+                return None
+        return None
     
     def get_from_cloud(self, table, query="*"):
         """Retrieve data from Supabase"""
