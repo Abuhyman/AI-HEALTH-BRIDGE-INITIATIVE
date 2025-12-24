@@ -251,21 +251,19 @@ class HealthBridgeAI:
             'bmi': data.get('bmi', None)
         }
     
- def save_to_cloud(self, table, data):
-    """Save data to Supabase - Simple version"""
+def save_to_cloud(self, table, data):
+    """Save data to Supabase"""
     if self.supabase:
         try:
-            # Remove any None values
-            clean_data = {k: v for k, v in data.items() if v is not None}
+            # Convert data to dictionary if it's not already
+            if not isinstance(data, dict):
+                data = dict(data)
             
-            # Insert data
-            response = self.supabase.table(table).insert(clean_data).execute()
+            # Insert into database
+            response = self.supabase.table(table).insert(data).execute()
             return response.data[0] if response.data else None
         except Exception as e:
             st.error(f"Database error: {str(e)}")
-            # Show helpful error
-            if "column" in str(e) and "does not exist" in str(e):
-                st.info(f"Hint: You may need to add this column to your {table} table in Supabase.")
             return None
     return None
     
